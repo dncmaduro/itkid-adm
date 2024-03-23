@@ -1,11 +1,19 @@
 <template>
   <div>
-    <span>er</span>
+    <v-toolbar :elevation="6">
+      <v-toolbar-title class="font-weight-bold">
+        <nuxt-link to="/" class="logo">ITKid</nuxt-link>
+        Web Admin
+      </v-toolbar-title>
+    </v-toolbar>
     <slot />
-    <v-icon>mdi-school</v-icon>
   </div>
 </template>
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.logo {
+  color: $primary-color;
+}
+</style>

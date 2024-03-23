@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   css: [
     "vuetify/lib/styles/main.sass",
     "@mdi/font/css/materialdesignicons.min.css",
+    "~/assets/index.scss",
   ],
   build: {
     transpile: ["vuetify"],
@@ -11,6 +12,13 @@ export default defineNuxtConfig({
   vite: {
     define: {
       "process.env.DEBUG": false,
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "~/assets/variables.scss" as *;',
+        },
+      },
     },
   },
 });
