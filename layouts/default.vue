@@ -1,8 +1,7 @@
 <template>
   <div>
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <span>deflay</span>
+    <slot />
   </div>
 </template>
 

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <span>er</span>
+    <slot />
+    <v-icon>mdi-school</v-icon>
   </div>
 </template>
 
