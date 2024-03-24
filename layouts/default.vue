@@ -7,7 +7,7 @@
       </v-toolbar-title>
       <v-spacer />
       <v-btn>
-        <nuxt-link to="/">Users</nuxt-link>
+        <nuxt-link to="/users">Users</nuxt-link>
       </v-btn>
       <v-btn>
         <nuxt-link to="/">Categories</nuxt-link>
