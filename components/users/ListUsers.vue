@@ -13,7 +13,7 @@
       <v-card-title>{{ user.name }}</v-card-title>
       <v-card-subtitle>{{ user.email }}</v-card-subtitle>
       <v-card-actions class="w-100">
-        <nuxt-link to="/users">View details</nuxt-link>
+        <nuxt-link :to="`/users/${user.id}`">View details</nuxt-link>
       </v-card-actions>
     </v-card>
   </div>

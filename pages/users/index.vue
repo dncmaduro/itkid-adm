@@ -19,6 +19,7 @@
   <v-row>
     <users-list-users :users="users.list" />
   </v-row>
+  <nuxt-child />
 </template>
 
 <script setup lang="ts">
