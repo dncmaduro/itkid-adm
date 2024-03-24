@@ -6,7 +6,7 @@
       >
     </v-row>
     <v-row class="mt-8">
-      <span class="mx-auto">User Details</span>
+      <span class="mx-auto title">User Details</span>
     </v-row>
     <v-row v-if="!user" class="mt-8">
       <span class="mx-auto">
@@ -14,7 +14,7 @@
         <v-icon>mdi-loading</v-icon>
       </span>
     </v-row>
-    <v-row v-else class="mx-auto mt-8 w-50">
+    <v-row v-else class="user mx-auto mt-8 w-50 rounded-lg">
       <v-form class="w-100">
         <v-text-field
           label="Email"
@@ -24,21 +24,21 @@
         >
         </v-text-field>
         <v-text-field
-          label="Name"
+          label="Name (can edit)"
           variant="underlined"
           v-model="updatedUser.name"
           :readonly="!isEditing"
         >
         </v-text-field>
         <v-text-field
-          label="Phone"
+          label="Phone (can edit)"
           variant="underlined"
           v-model="updatedUser.phone"
           :readonly="!isEditing"
         >
         </v-text-field>
         <v-text-field
-          label="Date of birth"
+          label="Date of birth (can edit)"
           variant="underlined"
           v-model="updatedUser.dob"
           :readonly="!isEditing"
@@ -134,6 +134,7 @@ const submit = async () => {
     }
     await fetchUser();
     convert();
+    isEditing.value = !isEditing.value;
   } catch (e) {
     error.value = e;
   }
@@ -150,6 +151,21 @@ const edit = () => {
 </script>
 
 <style scoped lang="scss">
+a {
+  color: $primary-color;
+  font-size: 1.25rem;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.user {
+  border: 1px solid $grey-c-color;
+  padding: 16px;
+}
+
 button {
   padding: 6px 10px;
   color: white;
