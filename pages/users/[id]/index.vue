@@ -28,6 +28,7 @@
           variant="underlined"
           v-model="updatedUser.name"
           :readonly="!isEditing"
+          :rules="nameRules"
         >
         </v-text-field>
         <v-text-field
@@ -35,6 +36,7 @@
           variant="underlined"
           v-model="updatedUser.phone"
           :readonly="!isEditing"
+          :rules="phoneRules"
         >
         </v-text-field>
         <v-text-field
@@ -42,6 +44,7 @@
           variant="underlined"
           v-model="updatedUser.dob"
           :readonly="!isEditing"
+          :rules="dateRules"
         >
         </v-text-field>
         <v-text-field
@@ -58,15 +61,19 @@
           disabled
         >
         </v-text-field>
+        <v-btn
+          v-if="isEditing"
+          type="submit"
+          class="submit rounded"
+          @click="submit"
+          >Submit</v-btn
+        >
       </v-form>
       <div v-if="!isEditing">
-        <button @click="edit" class="mt-8 rounded">Edit details</button>
+        <v-btn @click="edit" class="mt-8 rounded">Edit details</v-btn>
       </div>
       <div v-else>
-        <button @click="submit" class="submit mt-8 rounded">Submit</button>
-        <button @click="convert" class="cancel ml-4 mt-8 rounded">
-          Cancel
-        </button>
+        <v-btn @click="cancel" class="cancel mt-2 rounded">Cancel</v-btn>
       </div>
     </v-row>
   </div>
@@ -77,6 +84,7 @@ import { useRoute } from "vue-router";
 import type { IUser } from "~/types/user/user";
 import type { IUpdateUser } from "~/types/user/updateUser";
 const config = useRuntimeConfig();
+type Rule = (input: string) => true | string;
 
 const isEditing = ref(false);
 
@@ -148,6 +156,45 @@ onMounted(async () => {
 const edit = () => {
   isEditing.value = !isEditing.value;
 };
+
+const cancel = () => {
+  convert();
+  isEditing.value = !isEditing.value;
+};
+
+const nameRules: Ref<Rule[]> = ref([
+  (name: string) => {
+    if (!name || name.trim() === "") {
+      return "Name cannot be empty!";
+    }
+    const regex = /[^a-zA-Z\u00C0-\u1EF9\s]/;
+    return regex.test(name) ? "Wrong name format!" : true;
+  },
+]);
+
+const dateRules: Ref<Rule[]> = ref([
+  (date: string) => {
+    if (!date || date.trim() === "") {
+      return "Date cannot be empty!";
+    }
+    const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+    return regex.test(date)
+      ? true
+      : "Wrong date format! Please use 'yyyy-mm-dd'.";
+  },
+]);
+
+const phoneRules: Ref<Rule[]> = ref([
+  (phone: string) => {
+    if (!phone || phone.trim() === "") {
+      return "Phone number cannot be empty!";
+    }
+    const regex = /^\d{10}$/;
+    return regex.test(phone)
+      ? true
+      : "Wrong phone number format! Please use a 10-digit number.";
+  },
+]);
 </script>
 
 <style scoped lang="scss">
