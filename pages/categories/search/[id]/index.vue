@@ -18,6 +18,7 @@
           variant="underlined"
           v-model="updatedCategory.name"
           :readonly="!isEditing"
+          :rules="nonEmptyRules"
         ></v-text-field>
         <v-btn
           v-if="isEditing"
@@ -54,13 +55,6 @@ const updatedCategory = ref<IUpdateCategory>({
   name: "",
 });
 
-const convert = () => {
-  if (category.value) {
-    updatedCategory.value.id = category.value.id;
-    updatedCategory.value.name = category.value.name;
-  }
-};
-
 const fetchCategory = async () => {
   const endpoint = `${config.public.apiBase}/categories/getCategoryById?id=${id}`;
   try {
@@ -90,8 +84,8 @@ const submit = async () => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    // await fetchCategory();
-    convert();
+    await fetchCategory();
+    convert(category.value, updatedCategory.value);
   } catch (e) {
     error.value = e;
   }
@@ -99,7 +93,7 @@ const submit = async () => {
 
 onMounted(async () => {
   await fetchCategory();
-  convert();
+  convert(category.value, updatedCategory.value);
 });
 
 const edit = () => {
@@ -107,7 +101,8 @@ const edit = () => {
 };
 
 const cancel = () => {
-  convert();
+  convert(category.value, updatedCategory.value);
+
   isEditing.value = !isEditing.value;
 };
 </script>
