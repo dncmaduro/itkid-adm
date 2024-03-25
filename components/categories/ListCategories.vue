@@ -16,7 +16,11 @@
         <tr v-for="(category, index) in categories" :key="index">
           <td>{{ category.name }}</td>
           <td>{{ category.access }}</td>
-          <td><v-btn class="delete">Delete</v-btn></td>
+          <td>
+            <v-btn class="delete" @click="() => deleteCategory(category.id)"
+              >Delete</v-btn
+            >
+          </td>
           <td><v-btn class="details">Details</v-btn></td>
         </tr>
       </tbody>
@@ -26,6 +30,8 @@
 
 <script setup lang="ts">
 import type { ICategory } from "~/types/category/category";
+const config = useRuntimeConfig();
+const error = ref<unknown>();
 const props = defineProps({
   categories: {
     type: Array,
@@ -39,6 +45,26 @@ watch(
   () => props.categories,
   () => (categories.value = toRaw(props.categories) as ICategory[])
 );
+
+const deleteCategory = async (id: number) => {
+  const endpoint = `${config.public.apiBase}/categories/deleteCategory`;
+  try {
+    const response = await fetch(endpoint, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  } catch (e) {
+    error.value = e;
+  }
+};
 </script>
 
 <style scoped lang="scss">
