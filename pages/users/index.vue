@@ -34,23 +34,7 @@ const users = ref({
 
 const config = useRuntimeConfig();
 
-let data = ref<Response>();
 let error = ref<unknown>();
-
-type Procedure = (...args: any[]) => void;
-
-function debounce<F extends Procedure>(
-  func: F,
-  delay: number
-): (...args: Parameters<F>) => void {
-  let timeoutId: NodeJS.Timeout | undefined;
-  return (...args: Parameters<F>) => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    timeoutId = setTimeout(() => func(...args), delay);
-  };
-}
 
 const fetchUsers = async () => {
   const endpoint = `${config.public.apiBase}/users/getUsersByString?searchQuery=${query.value.searchQuery}`;

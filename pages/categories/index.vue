@@ -5,7 +5,7 @@
     </v-card>
   </v-row>
   <v-row class="mt-8 w-50 mx-auto">
-    <v-col><category-add-form /></v-col>
+    <v-col><categories-add-form /></v-col>
     <v-col
       ><nuxt-link to="/categories/search">
         <v-btn><v-icon class="mr-2">mdi-magnify</v-icon>Search Category</v-btn>
