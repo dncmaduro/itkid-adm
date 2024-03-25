@@ -21,7 +21,10 @@
             class="submit"
             text="Submit"
             type="submit"
-            @click="isActive.value = false"
+            @click="
+              isActive.value = false;
+              submit();
+            "
           ></v-btn>
           <v-btn
             class="cancel ml-4"
@@ -35,9 +38,13 @@
 </template>
 
 <script setup lang="ts">
-const form = reactive({
+const config = useRuntimeConfig();
+import type { IAddCategory } from "~/types/category/addForm";
+
+const form = ref<IAddCategory>({
   name: "",
 });
+const error = ref<unknown>();
 
 type Rule = (input: string) => true | string;
 
@@ -49,6 +56,25 @@ const nameRules: Ref<Rule[]> = ref([
     return true;
   },
 ]);
+
+const submit = async () => {
+  const endpoint = `${config.public.apiBase}/categories/addCategory`;
+  console.log("ccc");
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form.value),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  } catch (e) {
+    error.value = e;
+  }
+};
 </script>
 
 <style scoped lang="scss">

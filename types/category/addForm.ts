@@ -1,3 +1,3 @@
-export type AddCategory = {
+export type IAddCategory = {
   name: string;
 };

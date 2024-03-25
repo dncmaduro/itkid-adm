@@ -12,7 +12,6 @@
       </nuxt-link></v-col
     >
   </v-row>
-  <nuxt-child />
 </template>
 
 <script setup lang="ts"></script>
@@ -24,6 +23,13 @@
 
   .v-btn {
     color: $primary-color;
+  }
+}
+
+.v-card {
+  &-title {
+    font-size: 1.75rem;
+    font-weight: bold;
   }
 }
 </style>
