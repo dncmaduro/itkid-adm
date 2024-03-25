@@ -3,19 +3,26 @@
     Loading...<v-icon>mdi-loading</v-icon>
   </div>
   <div v-else class="w-100">
-    <v-card
-      class="mx-auto my-4"
-      border
-      :elevation="2"
-      v-for="(user, index) in users"
-      :key="index"
-    >
-      <v-card-title>{{ user.name }}</v-card-title>
-      <v-card-subtitle>{{ user.email }}</v-card-subtitle>
-      <v-card-actions class="w-100">
-        <nuxt-link :to="`/users/${user.id}`">View details</nuxt-link>
-      </v-card-actions>
-    </v-card>
+    <v-table height="400px" fixed-header class="w-50 mx-auto">
+      <thead>
+        <tr>
+          <th class="text-left">Name</th>
+          <th class="text-left">Email</th>
+          <th class="text-left"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(user, index) in users" :key="index">
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <nuxt-link :to="`/users/${user.id}`">
+              <v-btn> View details</v-btn>
+            </nuxt-link>
+          </td>
+        </tr>
+      </tbody>
+    </v-table>
   </div>
 </template>
 
@@ -37,19 +44,7 @@ watch(
 </script>
 
 <style scoped lang="scss">
-.v-card {
-  width: 40%;
-
-  &-actions {
-    justify-content: flex-end;
-
-    a {
-      color: $primary-color;
-    }
-  }
-
-  &-title {
-    padding-bottom: 0;
-  }
+.v-btn {
+  color: $primary-color;
 }
 </style>

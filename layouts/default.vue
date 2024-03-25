@@ -10,7 +10,7 @@
         <nuxt-link to="/users">Users</nuxt-link>
       </v-btn>
       <v-btn>
-        <nuxt-link to="/">Categories</nuxt-link>
+        <nuxt-link to="/categories">Categories</nuxt-link>
       </v-btn>
       <v-btn>
         <nuxt-link to="/">Courses</nuxt-link>

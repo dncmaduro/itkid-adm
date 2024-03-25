@@ -1,9 +1,9 @@
 <template>
   <v-row class="mt-8" justify="center">
     <v-card class="w-50 text-center rounded">
-      <v-card-title>Users Management</v-card-title>
+      <v-card-title>Categories Management</v-card-title>
       <v-card-text class="mt-4"
-        >Type in the input. Users will be found by email or name</v-card-text
+        >Type in the input to search category</v-card-text
       >
     </v-card>
   </v-row>
@@ -17,57 +17,57 @@
     </v-text-field>
   </v-row>
   <v-row>
-    <users-list-users :users="users.list" />
+    <categories-list-categories :categories="categories.list" />
   </v-row>
 </template>
 
 <script setup lang="ts">
-import type { IUser } from "~/types/user/user";
-
+import type { ICategory } from "~/types/category/category";
 const query = ref({
   searchQuery: "",
 });
 
-const users = ref({
-  list: [] as IUser[],
+const categories = ref({
+  list: [] as ICategory[],
 });
 
 const config = useRuntimeConfig();
-
 let error = ref<unknown>();
 
-const fetchUsers = async () => {
-  const endpoint = `${config.public.apiBase}/users/getUsersByString?searchQuery=${query.value.searchQuery}`;
+const fetchCategories = async () => {
+  const endpoint = `${config.public.apiBase}/categories/getCategoriesByString?searchQuery=${query.value.searchQuery}`;
   try {
     const response = await fetch(endpoint);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const jsonData = await response.json();
-    users.value.list = jsonData.users as IUser[];
+    categories.value.list = jsonData.categories as ICategory[];
   } catch (e) {
     error.value = e;
   }
 };
 
-const debouncedFetchUsers = debounce(fetchUsers, 500);
+const debouncedFetchCategories = debounce(fetchCategories, 500);
 
-onMounted(debouncedFetchUsers);
+onMounted(debouncedFetchCategories);
 
-watch(() => query.value.searchQuery, debouncedFetchUsers);
+watch(() => query.value.searchQuery, debouncedFetchCategories);
 </script>
 
 <style scoped lang="scss">
-.v-card {
-  box-shadow: none;
+.v-col {
+  display: flex;
+  justify-content: center;
 
+  .v-btn {
+    color: $primary-color;
+  }
+}
+.v-card {
   &-title {
     font-size: 1.75rem;
     font-weight: bold;
-  }
-
-  &-text {
-    font-size: 1.25rem;
   }
 }
 </style>
