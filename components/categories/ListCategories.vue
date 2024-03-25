@@ -21,7 +21,11 @@
               >Delete</v-btn
             >
           </td>
-          <td><v-btn class="details">Details</v-btn></td>
+          <td>
+            <nuxt-link :to="`/categories/search/${category.id}`"
+              ><v-btn class="details">Details</v-btn></nuxt-link
+            >
+          </td>
         </tr>
       </tbody>
     </v-table>

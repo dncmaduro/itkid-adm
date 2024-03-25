@@ -14,7 +14,7 @@
               label="Name"
               variant="underlined"
               v-model="form.name"
-              :rules="nameRules"
+              :rules="nonEmptyRules"
             ></v-text-field>
           </v-form>
           <v-btn
@@ -45,17 +45,6 @@ const form = ref<IAddCategory>({
   name: "",
 });
 const error = ref<unknown>();
-
-type Rule = (input: string) => true | string;
-
-const nameRules: Ref<Rule[]> = ref([
-  (name: string) => {
-    if (!name || name.trim() === "") {
-      return "Name cannot be empty!";
-    }
-    return true;
-  },
-]);
 
 const submit = async () => {
   const endpoint = `${config.public.apiBase}/categories/addCategory`;

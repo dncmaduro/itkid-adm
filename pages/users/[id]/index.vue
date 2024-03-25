@@ -84,7 +84,6 @@ import { useRoute } from "vue-router";
 import type { IUser } from "~/types/user/user";
 import type { IUpdateUser } from "~/types/user/updateUser";
 const config = useRuntimeConfig();
-type Rule = (input: string) => true | string;
 
 const isEditing = ref(false);
 
@@ -116,17 +115,6 @@ const fetchUser = async () => {
   }
 };
 
-const convert = () => {
-  if (user.value) {
-    updatedUser.value.id = user.value.id;
-    updatedUser.value.dob = user.value.dob;
-    updatedUser.value.phone = user.value.phone;
-    updatedUser.value.name = user.value.name;
-    updatedUser.value.email = user.value.email;
-    updatedUser.value.password = user.value.password;
-  }
-};
-
 const submit = async () => {
   const endpoint = `${config.public.apiBase}/users/updateUser`;
   try {
@@ -141,7 +129,7 @@ const submit = async () => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     await fetchUser();
-    convert();
+    convert(user.value, updatedUser.value);
     isEditing.value = !isEditing.value;
   } catch (e) {
     error.value = e;
@@ -150,7 +138,7 @@ const submit = async () => {
 
 onMounted(async () => {
   await fetchUser();
-  convert();
+  convert(user.value, updatedUser.value);
 });
 
 const edit = () => {
@@ -158,43 +146,9 @@ const edit = () => {
 };
 
 const cancel = () => {
-  convert();
+  convert(user.value, updatedUser.value);
   isEditing.value = !isEditing.value;
 };
-
-const nameRules: Ref<Rule[]> = ref([
-  (name: string) => {
-    if (!name || name.trim() === "") {
-      return "Name cannot be empty!";
-    }
-    const regex = /[^a-zA-Z\u00C0-\u1EF9\s]/;
-    return regex.test(name) ? "Wrong name format!" : true;
-  },
-]);
-
-const dateRules: Ref<Rule[]> = ref([
-  (date: string) => {
-    if (!date || date.trim() === "") {
-      return "Date cannot be empty!";
-    }
-    const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
-    return regex.test(date)
-      ? true
-      : "Wrong date format! Please use 'yyyy-mm-dd'.";
-  },
-]);
-
-const phoneRules: Ref<Rule[]> = ref([
-  (phone: string) => {
-    if (!phone || phone.trim() === "") {
-      return "Phone number cannot be empty!";
-    }
-    const regex = /^\d{10}$/;
-    return regex.test(phone)
-      ? true
-      : "Wrong phone number format! Please use a 10-digit number.";
-  },
-]);
 </script>
 
 <style scoped lang="scss">
