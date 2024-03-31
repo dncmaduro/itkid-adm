@@ -29,6 +29,7 @@
       >
       </v-text-field>
     </v-row>
+    <courses-list-courses :courses="courses.list" />
   </div>
 </template>
 

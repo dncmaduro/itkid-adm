@@ -29,4 +29,11 @@ export default defineNuxtConfig({
           : process.env.DEV_API_BASE,
     },
   },
+  imports: {
+    dirs: [
+      "composables",
+      "composables/*/index.{ts,js,mjs,mts}",
+      "composables/**",
+    ],
+  },
 });

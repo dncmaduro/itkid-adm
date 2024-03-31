@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!categories.length" class="w-100 text-center">
+  <div v-if="!courses.length" class="w-100 text-center">
     Loading...<v-icon>mdi-loading</v-icon>
   </div>
   <div v-else class="w-100">
@@ -13,16 +13,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(category, index) in categories" :key="index">
-          <td>{{ category.name }}</td>
-          <td>{{ category.access }}</td>
+        <tr v-for="(course, index) in courses" :key="index">
+          <td>{{ course.name }}</td>
+          <td>{{ course.access }}</td>
           <td>
-            <v-btn class="delete" @click="() => deleteCategory(category.id)"
+            <v-btn class="delete" @click="() => deleteCategory(course.id)"
               >Delete</v-btn
             >
           </td>
           <td>
-            <nuxt-link :to="`/categories/search/${category.id}`"
+            <nuxt-link :to="`/courses/${course.id}`"
               ><v-btn class="details">Details</v-btn></nuxt-link
             >
           </td>
@@ -33,19 +33,19 @@
 </template>
 
 <script setup lang="ts">
-import type { ICategory } from "~/types/category/category";
+import type { ICourse } from "~/types/course/course";
 const props = defineProps({
-  categories: {
+  courses: {
     type: Array,
     required: true,
   },
 });
 
-const categories = ref<ICategory[]>([]);
+const courses = ref<ICourse[]>([]);
 
 watch(
-  () => props.categories,
-  () => (categories.value = toRaw(props.categories) as ICategory[])
+  () => props.courses,
+  () => (courses.value = toRaw(props.courses) as ICourse[])
 );
 </script>
 
