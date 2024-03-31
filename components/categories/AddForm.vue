@@ -48,7 +48,6 @@ const error = ref<unknown>();
 
 const submit = async () => {
   const endpoint = `${config.public.apiBase}/categories/addCategory`;
-  console.log("ccc");
   try {
     const response = await fetch(endpoint, {
       method: "POST",

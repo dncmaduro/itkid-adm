@@ -13,7 +13,7 @@
         <nuxt-link to="/categories">Categories</nuxt-link>
       </v-btn>
       <v-btn>
-        <nuxt-link to="/">Courses</nuxt-link>
+        <nuxt-link to="/courses">Courses</nuxt-link>
       </v-btn>
       <v-btn>
         <nuxt-link to="/">Fund Requests</nuxt-link>

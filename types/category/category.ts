@@ -1,5 +1,5 @@
 export type ICategory = {
-  id: number;
-  name: string;
-  access: number;
+  id?: number;
+  name?: string;
+  access?: number;
 };
